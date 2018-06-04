@@ -14,7 +14,7 @@ class Compiler:
     """
     class for dealing with data files, in an archive.
     """
-    def __init__(self, data_dir, archive_type='zip'):
+    def __init__(self, data_dir: str, archive_type: str = 'zip'):
         self.data_dir = data_dir
         self.archive_type = archive_type
 
@@ -62,6 +62,7 @@ class Compiler:
 def _test():
     a = Compiler('test-dir', 'tar')
     print(a.get_binary_data(False))
+
 
 if __name__ == '__main__':
     _test()
