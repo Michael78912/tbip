@@ -5,7 +5,7 @@ console.py- this deals with console programs and things like that
 import shutil
 
 
-class ConsoleProgressBar:
+class ProgressBar:
     finished = False
 
     def __init__(self, increments_to_full, title=''):
