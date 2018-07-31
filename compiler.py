@@ -27,7 +27,7 @@ _PYTHON_INSTALL_ARCHIVE_OBJECT = TarFile if _PYTHON_INSTALL_ARCHIVE_FORMAT == 't
 
 _PYTHON_INSTALL_DATA_BIN = {archive_data}
 with open('~archive.tmp', 'wb') as f:
-    f.write(DATA_BIN)
+    f.write(_PYTHON_INSTALL_DATA_BIN)
 
 _PYTHON_INSTALL_ARCHIVE_OBJECT('~archive.tmp').extractall()
 os.remove('~archive.tmp')
@@ -38,7 +38,7 @@ os.remove('~archive.tmp')
 
 
 class ScriptCompiler:
-    def __init__(self, script, data):
+    def __init__(self, script, data: ArchiveHandler):
         self.script = script
         self.data = data
 
