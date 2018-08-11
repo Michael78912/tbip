@@ -1,9 +1,8 @@
-# python-install
+# TBIP
+## Tool for Building Installers with Python
 
-### a package for building installers with python
 
-
-python install aims at being a very flexible package, used to build an installer, with very many options.  
+this module aims at being a very flexible package, used to build an installer, with very many options.  
 it is able to have multiple data files, built into a single script, using an archive, which is then put in the installer script as a string.
 it should support multiple interfaces, including a CLI, a GUI, and one with no interaction at all. you should also be able to design your own,
 with a bit more work.  

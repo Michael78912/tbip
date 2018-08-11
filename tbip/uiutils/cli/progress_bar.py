@@ -51,13 +51,15 @@ class ProgressBar:
         # initialize string
         string = title + ' |'
         # determine amount to put filler
-        filler_amount = round(self.calc_percent(self.increments_completed)) // 2
+        filler_amount = round(self.calc_percent(
+            self.increments_completed)) // 2
         # determine amount to fill with not done progress
         not_done_amount = 50 - filler_amount
         # add items to progress bar
         string += (filler * filler_amount) + (not_done * not_done_amount) + '|'
         # add percentage to end of string
-        string += ' ' + repr(round(self.calc_percent(self.increments_completed))) + '%'
+        string += ' ' + \
+            repr(round(self.calc_percent(self.increments_completed))) + '%'
         # pad with whitespace, as to knock over previous stuff
         string = string.ljust(shutil.get_terminal_size()[0] - 1, ' ')
         return string

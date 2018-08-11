@@ -38,6 +38,7 @@ os.remove('~archive.tmp')
 
 
 class ScriptCompiler:
+
     def __init__(self, script, data: ArchiveHandler):
         self.script = script
         self.data = data
@@ -54,4 +55,5 @@ class ScriptCompiler:
 
 
 if __name__ == '__main__':
-    ScriptCompiler(open('archive_data.py').read(), ArchiveHandler('test-dir')).get_data()
+    ScriptCompiler(open('archive_data.py').read(),
+                   ArchiveHandler('test-dir')).get_data()
