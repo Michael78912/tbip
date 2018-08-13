@@ -1,6 +1,6 @@
 """ui.py- base class for all UIs.
-inherit ALL UI classes from this, as it wil handle the codes returned 
-from each item that is run. 
+inherit ALL UI classes from this, as it wil handle the codes returned
+from each item that is run.
 """
 import sys
 
@@ -19,4 +19,9 @@ class UI:
         self.items = items
 
     def process(self, code):
-        self.codes[code]
+        """proccesses error code and runs proper function."""
+        self.codes[code]()
+
+    def run(self):
+        """runs all items in proper UI"""
+        pass
