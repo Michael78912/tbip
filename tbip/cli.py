@@ -6,6 +6,13 @@ import sys
 
 _MS_WINDOWS = sys.platform == 'win32'
 
+try:
+    from .uiutils._cli_progress_bar import ProgressBar
+
+except SystemError:
+    from uiutils._cli_progress_bar import ProgressBar
+
+
 if _MS_WINDOWS:
     import msvcrt
     _getche = msvcrt.getwche
@@ -16,19 +23,20 @@ else:
     import termios
 
     def _getch():
-        fd = sys.stdin.fileno()
-        old = termios.tcgetattr(fd)
+        file_descriptor = sys.stdin.fileno()
+        old = termios.tcgetattr(file_descriptor)
         try:
-            tty.setraw(fd)
+            tty.setraw(file_descriptor)
             char = sys.stdin.read(1)
         finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+            termios.tcsetattr(file_descriptor, termios.TCSADRAIN, old)
+        return char
 
     def _getche():
-        ch = _getch()
+        char = _getch()
         sys.stdout.write(ch)
         sys.stdout.flush()
-        return ch
+        return char
 
 
 def _contains(string, sub):
@@ -38,15 +46,18 @@ def _contains(string, sub):
 
 
 class CLI:
-    """class for handling all of the sending of items, and runs them in order.
-    """
+    """class for handling all of the sending of items, and runs them in order."""
+
+    ProgressBar = ProgressBar
 
     def __init__(self, outfile=sys.stdout, infile=sys.stdin):
-        self.file = sys.stdout
+        self.outfile = outfile
+        self.infile = infile
 
-    def echo(self, *args, flush=True):
-        # send output to proper file
-        print(*args, flush=flush, file=sys.stdout)
+    def echo(self, *args, flush=True, newline=True):
+        """send output to proper file"""
+        print(*args, flush=flush, file=self.outfile,
+              end='\n' if newline else '')
 
     def get_input(self, prompt='', length='*', strip=True):
         """gets input, and and truncates it to length.
@@ -62,7 +73,8 @@ class CLI:
             raise ValueError(
                 'length must be integer greater than 0 or a ?, +, or * symbol.')
 
-        # different function is needed for a number value. prompt again if it is 
+        # different function is needed for a number value. prompt again if it
+        # is
         if isinstance(length, int):
             func = lambda x: x[:length] if len(x) >= length else None
 
@@ -73,19 +85,20 @@ class CLI:
                 '*': lambda x: x,
             }[length]
 
-
         data = ''
         invalid = False
 
         while not invalid:
-            data = func(input(prompt))
+            self.echo(prompt, newline=False)
+            data = func(self.infile.readline())
             invalid = False
             if data is not None:
                 invalid = True
 
         return data.strip() if strip else data
 
-    def getch(self, echo=True):
+    @staticmethod
+    def getch(echo=True):
         """get a single character from STDIN without waiting for the return
         key to be pressed.
         if echo is True then display the character.
