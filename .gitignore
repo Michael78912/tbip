@@ -6,6 +6,7 @@
 *.so
 *.pyc
 *.pyo
+*.zip
 __pycache__
 test-dir
 .idea
