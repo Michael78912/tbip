@@ -82,6 +82,24 @@ the current directory.
 Advanced Usage
 --------------
 
+Getting Priveleges
+^^^^^^^^^^^^^^^^^^
+
+Windows
+"""""""
+
+`tbip.get_admin()` should restart the program as an administrator.
+if not, the user probably has insufficient rights.
+
+Unix/Linux
+""""""""""
+
+`tbip.get_root()` should replace the current program with gksudo, 
+nd run it as root.
+
+if it does not work, install gksudo in the package `gksu`, and try again.
+
+
 Items
 ^^^^^
 

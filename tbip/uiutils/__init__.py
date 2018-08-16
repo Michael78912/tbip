@@ -9,6 +9,9 @@ import sys
 import subprocess
 import os
 
+
+import colorama
+
 sys.path.append('..')
 
 try:
@@ -17,15 +20,6 @@ try:
 except SystemError:
     from baseitem import Item
     from tree import Tree
-
-
-class ProgressUtils(Enum):
-    """enumerations of methods of displaying progress."""
-    PROGRESS_BAR = 0
-    PERCENT = 1
-    FILES = 2
-    NULL = 3
-    MSG = 4
 
 
 class _CaseInsensitiveDict(dict):
@@ -62,7 +56,7 @@ class Licence(Item):
         self.file = file
 
     def run(self):
-        self.ui.echo('LICENCE:')
+        self.ui.echo('LICENCE:', fcolour=colorama.Fore.RED)
         for i in self.file:
             self.ui.echo(i.strip())
 
@@ -90,7 +84,7 @@ class Caller(Item):
 class Choice(Item):
     """asks what they would like to do, and acts accordingly"""
 
-    def __init__(self, msg="continue", opts={'y': lambda: 0, 'n': lambda: 1}, ignorecase=True):
+    def __init__(self, msg="continue?", opts={'y': lambda: 0, 'n': lambda: 1}, ignorecase=True):
         self.msg = self.form(msg, opts)
         self.opts = _CaseInsensitiveDict(**opts) if ignorecase else opts
 
@@ -104,7 +98,7 @@ class Choice(Item):
         while opt not in self.opts.keys():
             opt = self.ui.get_input(self.msg)
 
-        return self.opts[opt]
+        return self.opts[opt]()
 
 
 # class Installer(Item):

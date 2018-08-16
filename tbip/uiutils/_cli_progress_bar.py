@@ -8,7 +8,7 @@ import shutil
 class ProgressBar:
     finished = False
 
-    def __init__(self, increments_to_full, title=''):
+    def __init__(self, increments_to_full, title='progress: '):
         self.title = title
         self.increments_to_full = increments_to_full
         self.increments_completed = 0
@@ -87,7 +87,7 @@ class ProgressBar:
 
 def _test():
     import time
-    s = ConsoleProgressBar(100, 'test')
+    s = ProgressBar(100, 'test')
     while not s.finished:
         s.add(0.5)
         time.sleep(0.01)

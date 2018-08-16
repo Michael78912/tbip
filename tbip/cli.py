@@ -3,14 +3,17 @@ you will create a CLI object, and pass it to installer.
 """
 
 import sys
+import colorama
 
 _MS_WINDOWS = sys.platform == 'win32'
 
 try:
     from .uiutils._cli_progress_bar import ProgressBar
+    from .ui import UI
 
 except SystemError:
     from uiutils._cli_progress_bar import ProgressBar
+    from ui import UI
 
 
 if _MS_WINDOWS:
@@ -34,7 +37,7 @@ else:
 
     def _getche():
         char = _getch()
-        sys.stdout.write(ch)
+        sys.stdout.write(char)
         sys.stdout.flush()
         return char
 
@@ -45,19 +48,41 @@ def _contains(string, sub):
     return False
 
 
-class CLI:
+class _CLI(UI):
     """class for handling all of the sending of items, and runs them in order."""
 
     ProgressBar = ProgressBar
+
+    class Percent:
+        """class for displaying percent completed of installation"""
+        finished = False
+        increments_completed = 0
+
+        def __init__(self, increments_to_full, title='progress: '):
+            self.increments_to_full = increments_to_full
+            self.title = title
+
+        def add(self, amount):
+            """adds an amount to self.increments_completed,
+            and displays the updated thing.
+            """
+            self.increments_completed += amount
+            perc = (self.increments_completed / 100) * self.increments_to_full
+            if round(perc) >= 100:
+                self.finished = True
+
+            print('\r{}%'.format(perc))
 
     def __init__(self, outfile=sys.stdout, infile=sys.stdin):
         self.outfile = outfile
         self.infile = infile
 
-    def echo(self, *args, flush=True, newline=True):
+    def echo(self, *args, fcolour=colorama.Fore.WHITE,
+             bcolour=colorama.Back.BLACK, flush=True, newline=True):
         """send output to proper file"""
-        print(*args, flush=flush, file=self.outfile,
-              end='\n' if newline else '')
+
+        print(fcolour, bcolour, ' '.join(args), colorama.Style.RESET_ALL,
+              flush=flush, file=self.outfile, end='\n' if newline else '')
 
     def get_input(self, prompt='', length='*', strip=True):
         """gets input, and and truncates it to length.
@@ -105,6 +130,21 @@ class CLI:
         """
 
         return _getche() if echo else _getch()
+
+    @staticmethod
+    def clear():
+        """works in a similar way to clear on *NIX systems
+        and cls on windows.
+        """
+
+        # colorama module must be initiated on windows for this to work
+        if _MS_WINDOWS:
+            colorama.init()
+
+        # ansii escape code for clear
+        print("\033[H\033[J")
+
+CLI = _CLI()
 
 
 if __name__ == '__main__':
