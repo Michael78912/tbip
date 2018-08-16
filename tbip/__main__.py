@@ -42,6 +42,8 @@ def main():
 
     print('creating, reading and formatting zip file, please wait...'
           '(this may take a while)')
+    with open('example.so', 'w') as d:
+        d.write(repr(ns))
     make(ns.script, ns.data, ns.output)
 
     if ns.freeze:
@@ -51,11 +53,11 @@ def main():
             if sys.platform == 'win32' else 'pyinstaller',
             ns.output,
             '--onefile',
-            '--upx-dir=' + ns.upx,
+            '--upx-dir=' + ns.upx if ns.upx is not None else '/',
         ]
 
         if sys.platform == 'win32':
-            commands.append('-W' if ns.windowed else '-C')
+            commands.append('-w' if ns.windowed else '-c')
 
         if sys.platform == 'win32' and ns.icon:
             commands.append('-i=' + ns.icon)

@@ -69,14 +69,14 @@ but what is the point? it's not going to actually install
 anything, because you havent even specified where to install!!
 
 that's where the command line comes in handy. you should be able to
-run this with `python -m tbip <script-name> -d <data-directory>`.
+run this with :code:`python -m tbip <script-name> -d <data-directory>`.
 this will bundle your data in the installer script, as a zip file encoded
-in `base64`, to be extracted at runtime and installed from there on.
+in base64, to be extracted at runtime and installed from there on.
 
 Installation
 ------------
 once I get this up on PyPI, you can install
-from `pip install tbip`. for now, you can clone it and run it in
+from :code:`pip install tbip`. for now, you can clone it and run it in
 the current directory.
 
 Advanced Usage
@@ -88,24 +88,24 @@ Getting Priveleges
 Windows
 """""""
 
-`tbip.get_admin()` should restart the program as an administrator.
+:code:`tbip.get_admin()` should restart the program as an administrator.
 if not, the user probably has insufficient rights.
 
 Unix/Linux
 """"""""""
 
-`tbip.get_root()` should replace the current program with gksudo, 
+:code:`tbip.get_root()` should replace the current program with gksudo, 
 nd run it as root.
 
-if it does not work, install gksudo in the package `gksu`, and try again.
+if it does not work, install gksudo in the package :code:`gksu`, and try again.
 
 
 Items
 ^^^^^
 
 *a note on how items interact with their UI*: the UI object
-you passed to `Installer` was sent to each of the items you also sent.
-when an item's `run` method is called, it is expected to return 1 of 2
+you passed to :code:`Installer` was sent to each of the items you also sent.
+when an item's :code:`run` method is called, it is expected to return 1 of 2
 values, which is passed to the UI's :
 
 - 0: everything went OK, continue
@@ -123,48 +123,48 @@ Readme
 """"""
 displays a readme, and tells the user to press enter to continue.
 
-`Readme(file)` --> tbip.uiutils.Readme object
+:code:`Readme(file)` --> tbip.uiutils.Readme object
 
 Licence
 """""""
 displays a licence, preceded by the header "LICENCE:".
 aks the user if this is OK and wants to continue.
 
-`Licence(file)` --> tbip.uiutils.Licence object
+:code:`Licence(file)` --> tbip.uiutils.Licence object
 
 Caller
 """"""
 calls an external program, with the arguments specified.
-just a very thin wrapper around `subprocess.call`.
+just a very thin wrapper around :code:`subprocess.call`.
 
-`Caller(args)` --> tbip.uiutils.Caller object
+:code:`Caller(args)` --> tbip.uiutils.Caller object
 
 Choice
 """"""
 prompts the user for a string, and acts accordingly.
 if the string enterd is not valid, prompt again.
 
-`Choice(msg="continue?", opts={'y': lambda: 0, 'n': lambda: 1}, ignorecase=True)` --> tbip.uiutils.Choice object
+:code:`Choice(msg="continue?", opts={'y': lambda: 0, 'n': lambda: 1}, ignorecase=True)` --> tbip.uiutils.Choice object
 
 Installation progress
 ^^^^^^^^^^^^^^^^^^^^^
 
 there are sevreal ways to watch the installation progress
-(all accessed in `tbip.installer.ProgressUtils`)
+(all accessed in :code:`tbip.installer.ProgressUtils`)
 
-+--------------------------------+------------------------------+-----------+
-|          Description           |            name              |  value    |
-+================================+==============================+===========+
-|          a progress bar        | `ProgressUtils.PROGRESS_BAR` |    0      |
-+--------------------------------+------------------------------+-----------+
-|           percentage           |   `ProgressUtils.PERCENT`    |    1      |
-+--------------------------------+------------------------------+-----------+
-| displaying each file processed |    `ProgressUtils.FILES`     |    2      |
-+--------------------------------+------------------------------+-----------+
-|     do absolutely nothing      |     `ProgressUtils.NULL`     |    3      |
-+--------------------------------+------------------------------+-----------+
-|  at first, display a message   |      `ProgressUtils.MSG`     |    4      |
-+--------------------------------+------------------------------+-----------+
++--------------------------------+------------------------------------+-----------+
+|          Description           |            name                    |  value    |
++================================+====================================+===========+
+|          a progress bar        | :code:`ProgressUtils.PROGRESS_BAR` |    0      |
++--------------------------------+------------------------------------+-----------+
+|           percentage           |   :code:`ProgressUtils.PERCENT`    |    1      |
++--------------------------------+------------------------------------+-----------+
+| displaying each file processed |   :code:`ProgressUtils.FILES`-     |    2      |
++--------------------------------+------------------------------------+-----------+
+|     do absolutely nothing      |     :code:`ProgressUtils.NULL`     |    3      |
++--------------------------------+------------------------------------+-----------+
+|  at first, display a message   |      :code:`ProgressUtils.MSG`     |    4      |
++--------------------------------+------------------------------------+-----------+
 
 Command Line options
 ^^^^^^^^^^^^^^^^^^^^
@@ -195,8 +195,8 @@ Deriving classes
 
 only the classes UI and Item should be derived from. find the base classes for:
 
-- UI: `tbip.ui.UI`
-- Item: `tbip.uiutils.baseitem.Item`
+- UI: :code:`tbip.ui.UI`
+- Item: :code:`tbip.uiutils.baseitem.Item`
 
 User Interfaces
 """""""""""""""
@@ -231,28 +231,28 @@ the CLI (Command Line Interface) is a UI. you can see here:
             ...
 
 all those methods should be overridden in a new class.
-(I actually haven't used `getch` yet, but i might, so it would be good to)
+(I actually haven't used :code:`getch` yet, but i might, so it would be good to)
 
 they all should be self explanitory, but:
 
-`echo` outputs the message to the screen in CLI it is just a wrapper around `print`. 
+:code:`echo` outputs the message to the screen in CLI it is just a wrapper around `print`. 
 it should be able to take all of the arguments you see there, and act accordingly.
 
-`get_input` should be able to read one line. the length parameter acts a bit like quantifiers in a regex.
+:code:`get_input` should be able to read one line. the length parameter acts a bit like quantifiers in a regex.
 ?: truncate it to one character, or 0
 +: will return if the string is one character or more, if it is null, will prompt again.
 *: any length (including 0)
 
 (of course, any integer will work too)
 
-`getch` should read a single character. if echo is true, echo the character too.
+:code:`getch` should read a single character. if echo is true, echo the character too.
 
-`clear` should simply clear the display
+:code:`clear` should simply clear the display
 
 Items
 """""
 
-Items are easier. here is `Caller`:
+Items are easier. here is :code:`Caller`:
 
 .. code-block::python
 
@@ -269,8 +269,8 @@ Items are easier. here is `Caller`:
 simple, short and sweet. of course, this is a minimal example,
 you can create any item you want to do anything you want!
 
-it must have `run` overridden, because if you didn't, it would do nothing.
-*remember that `run` must always return 1 or 0!*
+it must have :code:`run` overridden, because if you didn't, it would do nothing.
+*remember that :code:`run` must always return 1 or 0!*
 
 Contributing
 ------------
