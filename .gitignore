@@ -7,6 +7,12 @@
 *.pyc
 *.pyo
 *.zip
+
+# distutils stuff
+tbip.egg-info
+dist
+build
+
 __pycache__
 test-dir
 .idea
