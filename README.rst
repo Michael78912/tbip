@@ -5,7 +5,7 @@ TBIP
 **********************************************
 TBIP- Tool for Building Installers with Python
 **********************************************
-a flexible package to create installers using Python
+a flexible cross-platform package to create installers using Python
 
 .. contents::
 
