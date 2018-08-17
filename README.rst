@@ -75,9 +75,9 @@ in base64, to be extracted at runtime and installed from there on.
 
 Installation
 ------------
-once I get this up on PyPI, you can install
-from :code:`pip install tbip`. for now, you can clone it and run it in
-the current directory.
+install from :code:`pip install tbip`. or, clone the repository,
+:code:`git clone https://github.com/michael78912/tbip.git`, and run 
+:code:`python3 setup.py install`
 
 Advanced Usage
 --------------
