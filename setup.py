@@ -8,7 +8,7 @@ with open('requirements.txt') as openfile:
 
 setuptools.setup(
     name="tbip",
-    version="0.0.0.1",
+    version="0.0.0.3",
     author="Michael Gill",
     author_email="michael.78912.8@gmail.com",
     description="Build cross-platform installers",
