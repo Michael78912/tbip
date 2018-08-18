@@ -8,12 +8,11 @@ with open('requirements.txt') as openfile:
 
 setuptools.setup(
     name="tbip",
-    version="0.0.0.3",
+    version="0.0.0.4",
     author="Michael Gill",
     author_email="michael.78912.8@gmail.com",
     description="Build cross-platform installers",
     long_description=long_description,
-    long_description_content_type="text/x-rst",
     url="https://github.com/Michael78912/tbip",
     packages=setuptools.find_packages(),
     install_requires=install_requires,
