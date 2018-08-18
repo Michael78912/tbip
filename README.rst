@@ -2,6 +2,10 @@
 TBIP
 ####
 
+.. image:: https://travis-ci.org/Michael78912/tbip.svg?branch=master
+   :alt: Build status on travis-ci
+   :target: https://travis-ci.org/Michael78912/tbip
+
 **********************************************
 TBIP- Tool for Building Installers with Python
 **********************************************
