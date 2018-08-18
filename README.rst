@@ -241,7 +241,7 @@ it should be able to take all of the arguments you see there, and act accordingl
 :code:`get_input` should be able to read one line. the length parameter acts a bit like quantifiers in a regex.
 ?: truncate it to one character, or 0
 +: will return if the string is one character or more, if it is null, will prompt again.
-*: any length (including 0)
+\*: any length (including 0)
 
 (of course, any integer will work too)
 
