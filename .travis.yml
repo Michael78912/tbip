@@ -4,5 +4,5 @@ python:
 install:
     - 'pip install -r requirements.txt'
 script:
-    - 'python3 -m tbip test/test.py -d tbip -o test/test_install.py'
-    - 'python3 test/test_install.py'
+    - 'python3 -m tbip test/test.py -d tbip -o test_install.py'
+    - 'python3 test_install.py'
